@@ -14,6 +14,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import styles from "./Counter.module.css";
+import { log } from "console";
 
 export const Counter = () => {
   const dispatch = useAppDispatch();

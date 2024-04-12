@@ -1,4 +1,4 @@
-import type { NextRequest } from "next/server";
+import type { NextRequest } from "next/server"; //todo delete
 import { NextResponse } from "next/server";
 
 interface Context {
