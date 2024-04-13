@@ -1,6 +1,6 @@
 // A mock function to mimic making an async request for data
 
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 import type { Action, PayloadAction } from '@reduxjs/toolkit'
 /*
@@ -19,22 +19,31 @@ export const fetchCount = async (amount = 1) => {
 type RootState = any // normally inferred from state
 
 function isHydrateAction(action: Action): action is PayloadAction<RootState> {
-  return action.type === HYDRATE
+    return action.type === HYDRATE
 }
 
 export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/counter' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/pokemon/charmander' }),
     extractRehydrationInfo(action, { reducerPath }) {
         if (isHydrateAction(action)) {
-          return action.payload[reducerPath]
+            console.log('hydrate');
+            return action.payload[reducerPath]
         }
-      },
+    },
     endpoints: (builder) => ({
-      fetchCount: builder.query({
-        query: () => ''
-      })
+        fetchCount: builder.query({
+            query: () => '',
+            transformResponse: () => {
+                return { data: {id:1, name:'harry', category:'fantsy', 'description': 'aaa'} }
+            }
+        })
     }),
 })
+
+export const {
+    useFetchCountQuery,
+    util: { getRunningQueriesThunk },
+} = api;
 
 // export endpoints for use in SSR
 export const { fetchCount } = api.endpoints;

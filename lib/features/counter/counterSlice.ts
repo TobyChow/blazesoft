@@ -1,65 +1,50 @@
-import { createAppSlice } from "@/lib/createAppSlice";
 import type { AppThunk } from "@/lib/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { fetchCount, getRunningQueriesThunk } from "./counterAPI";
+import {configureStore, createSlice, ThunkAction} from '@reduxjs/toolkit';
+import {Action} from 'redux';
+import {createWrapper, HYDRATE} from 'next-redux-wrapper';
+import produce from 'immer'; 
 
-export interface CounterSliceState {
-  value: number;
-  status: "idle" | "loading" | "failed";
+let uid = 2; // unique id for each book
+
+export interface BookSliceState {
+  id: number,
+  name: string,
+  price: number,
+  category: string,
+  description: string,
 }
 
-const initialState: CounterSliceState = {
-  value: 0,
-  status: "idle",
-};
+const initialState: BookSliceState[] = [
+  {id:1, name:'harry', price:10, category:'fantsy', 'description': 'aaa'}
+]
 
 // If you are not using async thunks you can use the standalone `createSlice`.
-export const counterSlice = createAppSlice({
-  name: "counter",
+export const counterSlice = createSlice({
+  name: "booklist",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
-  reducers: (create) => ({
-    increment: create.reducer((state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
-    }),
-    decrement: create.reducer((state) => {
-      state.value -= 1;
-    }),
-    // Use the `PayloadAction` type to declare the contents of `action.payload`
-    incrementByAmount: create.reducer(
-      (state, action: PayloadAction<number>) => {
-        state.value += action.payload;
-      },
-    ),
-  }),
-  // You can define your selectors here. These selectors receive the slice
-  // state as their first argument.
+  reducers: {
+    add(state, action) {
+      action.payload.id = uid++;
+      state.push(action.payload)
+    },
+    remove(state, action) {
+      return state.filter(book => book.id !== action.payload);
+    },
+    edit(state, action) {
+      const matchedIdx = state.findIndex(booklist => booklist.id === action.payload.id);
+      if (matchedIdx !== -1) state[matchedIdx] = action.payload;
+    }
+  },
   selectors: {
-    selectCount: (counter) => counter.value,
-    selectStatus: (counter) => counter.status,
+    selectBookList: (state) => state.booklist,
   },
 });
 
 // Action creators are generated for each case reducer function.
-export const { decrement, increment, incrementByAmount } =
-  counterSlice.actions;
+export const { add, remove, edit } = counterSlice.actions;
 
-// Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectCount, selectStatus } = counterSlice.selectors;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-export const incrementIfOdd =
-  (amount: number): AppThunk =>
-  (dispatch, getState) => {
-    const currentValue = selectCount(getState());
-
-    if (currentValue % 2 === 1 || currentValue % 2 === -1) {
-      dispatch(incrementByAmount(amount));
-    }
-  };
+export const { selectBookList } = counterSlice.selectors;
