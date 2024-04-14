@@ -18,19 +18,29 @@ import {
   fetchCount
 } from "@/lib/features/counter/counterAPI";
 import BookList from "../bookList/BookList";
+import BookForm from "../bookForm/BookForm";
 
 export const Counter = () => {
   const dispatch = useAppDispatch();
   const bookList = useAppSelector(selectBookList);
+  const [selectedBook, setSelectedBook] = useState(null);
+
   console.log(bookList)
+
+  function handleAdd() {
+    setSelectedBook(null);
+  }
+
   return (
     <>
-      <BookList bookList={bookList}/>
+      <BookForm book={selectedBook}/>
+
+      <BookList bookList={bookList} setSelectedBook={setSelectedBook}/>
 
       <button
         className={styles.button}
         aria-label="Increment value"
-        onClick={() => dispatch(add({name:'ron', price:10, category:'fantsy', 'description': 'aaa'}))}
+        onClick={handleAdd}
       >
         +
       </button>
