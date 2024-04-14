@@ -18,7 +18,7 @@ export default function BookForm({ book = null, modalRef = null }) {
                 }}
                 validateOnChange={false}
                 validateOnBlur={false}
-                validate={values => {
+                validate={values => { //todo better validations
                     const errors = {};
                     if (values.name === '') {
                         errors.name = 'Required';

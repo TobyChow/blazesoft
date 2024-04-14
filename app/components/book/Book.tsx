@@ -3,8 +3,6 @@ import {
     selectBookList
 } from "@/lib/features/bookstore/BookStoreSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useState } from "react";
-import BookForm from "../bookForm/BookForm";
 
 export default function Book({ book, setSelectedBook, modalRef }) {
     const dispatch = useAppDispatch();
