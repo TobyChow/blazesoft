@@ -1,11 +1,11 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { counterSlice } from "./features/counter/counterSlice";
+import { BookStoreSlice } from "./features/bookstore/BookStoreSlice";
 import { createWrapper } from "next-redux-wrapper";
-import { api } from './features/counter/counterAPI';
+import { api } from './features/bookstore/bookstoreAPI';
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(counterSlice);
+const rootReducer = combineSlices(BookStoreSlice);
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 

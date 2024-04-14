@@ -1,6 +1,6 @@
 import type { AppThunk } from "@/lib/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { fetchCount, getRunningQueriesThunk } from "./counterAPI";
+import { fetchCount, getRunningQueriesThunk } from "./bookstoreAPI";
 import {configureStore, createSlice, ThunkAction} from '@reduxjs/toolkit';
 import {Action} from 'redux';
 import {createWrapper, HYDRATE} from 'next-redux-wrapper';
@@ -21,7 +21,7 @@ const initialState: BookSliceState[] = [
 ]
 
 // If you are not using async thunks you can use the standalone `createSlice`.
-export const counterSlice = createSlice({
+export const BookStoreSlice = createSlice({
   name: "booklist",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
@@ -45,6 +45,6 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const { add, remove, edit } = counterSlice.actions;
+export const { add, remove, edit } = BookStoreSlice.actions;
 
-export const { selectBookList } = counterSlice.selectors;
+export const { selectBookList } = BookStoreSlice.selectors;

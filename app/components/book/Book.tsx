@@ -1,12 +1,12 @@
 import {
     remove,
     selectBookList
-} from "@/lib/features/counter/counterSlice";
+} from "@/lib/features/bookstore/BookStoreSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useState } from "react";
 import BookForm from "../bookForm/BookForm";
 
-export default function Book({ book, setSelectedBook }) {
+export default function Book({ book, setSelectedBook, modalRef }) {
     const dispatch = useAppDispatch();
     const bookList = useAppSelector(selectBookList);
     
@@ -14,6 +14,7 @@ export default function Book({ book, setSelectedBook }) {
         const selectedBookId = event.currentTarget.dataset.id;
         const selectedBook = bookList.filter(book => book.id == selectedBookId)[0];
         setSelectedBook(selectedBook);
+        modalRef.current.showModal();
     }
     
     return (

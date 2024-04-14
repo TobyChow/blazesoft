@@ -1,12 +1,12 @@
 import {
     add,
     edit,
-} from "@/lib/features/counter/counterSlice";
+} from "@/lib/features/bookstore/BookStoreSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export default function BookForm({ book = null }) {
+export default function BookForm({ book=null, modalRef=null }) {
     const dispatch = useAppDispatch();
     const mode = book?.id ? 'Edit' : 'Add';
     return (
@@ -19,6 +19,8 @@ export default function BookForm({ book = null }) {
                 category: book?.category || '',
                 description: book?.description || ''
             }}
+            validateOnChange={false}
+            validateOnBlur={false}
             validate={values => {
                 const errors = {};
                 if (values.name === '') {
@@ -41,6 +43,7 @@ export default function BookForm({ book = null }) {
                 } else {
                     dispatch(add(values));
                 }
+                if (modalRef) modalRef.current.close();
             }}
         >{(props) => (
             <Form>
