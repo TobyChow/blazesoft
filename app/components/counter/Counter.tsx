@@ -33,7 +33,8 @@ export const Counter = () => {
 
   return (
     <>
-      <BookForm book={selectedBook}/>
+      {JSON.stringify(selectedBook)}
+      <BookForm key={Math.random()}book={selectedBook}/>
 
       <BookList bookList={bookList} setSelectedBook={setSelectedBook}/>
 

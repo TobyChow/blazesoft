@@ -4,68 +4,74 @@ import {
 } from "@/lib/features/counter/counterSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export default function BookForm({ book = null }) {
     const dispatch = useAppDispatch();
-    const [name, setName] = useState(book?.name ?? '');
-    const [price, setPrice] = useState(book?.price ?? '');
-    const [category, setCategory] = useState(book?.category ?? '');
-    const [description, setDescription] = useState(book?.description ?? '');
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        const formContent = {
-            name,
-            price,
-            category,
-            description
-        }
-        
-        
-        // quick and dirty validation 
-        let isValid = true;
-        for (let field in formContent) {
-            console.log(formContent, field);
-            
-            if (formContent[field] === '') {
-                console.log('err');
-                isValid = false;
-            }
-        }
-
-        if (!isValid) return;
-
-        if (book?.id) {
-            dispatch(edit({id:book.id, ...formContent}))
-        } else {
-            dispatch(add(formContent))
-        }
-
-        setName('');
-        setPrice('');
-        setCategory('');
-        setDescription('');
-    }
-    
+    const mode = book?.id ? 'Edit' : 'Add';
     return (
-        <form>
-            <label className="input input-bordered flex items-center gap-2">
-                Name
-                <input required value={name} onChange={(e) => setName(e.target.value)} type="text" className="grow" placeholder="Enter book name"/>
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-                Price
-                <input required value={price} onChange={(e) => setPrice(e.target.value)} type="text" className="grow" placeholder="Enter price" />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-                Category
-                <input required value={category} onChange={(e) => setCategory(e.target.value)} type="text" className="grow" placeholder="daisy@site.com" />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-                Description
-                <input required value={description} onChange={(e) => setDescription(e.target.value)} type="text" className="grow" placeholder="daisy@site.com" />
-            </label>
-            <button type="submit" onClick={handleSubmit} className="btn">Submit</button>
-        </form>
+        <>
+        { mode }
+        <Formik
+            initialValues={{
+                name: book?.id || '',
+                price: book?.price || '',
+                category: book?.category || '',
+                description: book?.description || ''
+            }}
+            validate={values => {
+                const errors = {};
+                if (values.name === '') {
+                    errors.name = 'Required';
+                }
+                if (values.price === '') {
+                    errors.price = 'Required';
+                }
+                if (values.category === '') {
+                    errors.category = 'Required';
+                }
+                if (values.description === '') {
+                    errors.description = 'Required';
+                }
+                return errors;
+            }}
+            onSubmit={(values) => {
+                if (book?.id) {
+                    dispatch(edit({id:book.id, ...values}))
+                } else {
+                    dispatch(add(values));
+                }
+            }}
+        >{(props) => (
+            <Form>
+                <label htmlFor="name" className="input input-bordered flex items-center gap-2">
+                    Name
+                    <Field id="name" name="name" placeholder="Enter name" />
+                </label>
+                <ErrorMessage name="name" component="div" />
+
+                <label htmlFor="price" className="input input-bordered flex items-center gap-2">
+                    Price
+                    <Field id="price" name="price" placeholder="Enter price" />
+                </label>
+                <ErrorMessage name="price" component="div" />
+
+                <label htmlFor="category" className="input input-bordered flex items-center gap-2">
+                    category
+                    <Field id="category" name="category" placeholder="Enter category" />
+                </label>
+                <ErrorMessage name="category" component="div" />
+
+                <label htmlFor="description" className="input input-bordered flex items-center gap-2">
+                    description
+                    <Field id="description" name="description" placeholder="Enter description" />
+                </label>
+                <ErrorMessage name="description" component="div" />
+
+                <button type="submit" className="btn">Submit</button>
+            </Form>
+        )}
+        </Formik>
+        </>
     );
 }
