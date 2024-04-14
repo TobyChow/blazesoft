@@ -10,7 +10,7 @@ import {
 } from "@/lib/features/bookstore/BookStoreSlice";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import styles from "./BookStore.module.css";
+// import styles from "./BookStore.module.css";
 import { wrapper } from "@/lib/store";
 import {
     useFetchCountQuery,
@@ -35,20 +35,20 @@ export const BookStore = () => {
     }
 
     return (
-        <>
-
+        <div className="flex flex-col items-center">
+            <button
+                className="btn m-auto"
+                aria-label="Increment value"
+                onClick={handleAdd}
+            >
+                Add Book
+            </button>
             <BookFormModal ref={modalRef}/>
 
             <BookList bookList={bookList}/>
 
-            <button
-                className={styles.button}
-                aria-label="Increment value"
-                onClick={handleAdd}
-            >
-                +
-            </button>
-        </>
+            
+        </div>
     );
 };
 

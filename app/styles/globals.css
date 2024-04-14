@@ -18,3 +18,9 @@ a {
 * {
   box-sizing: border-box;
 }
+/* fix bug with daisyUI modal leaving gap where scrollbar is */
+@layer base {
+    :root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) {
+        scrollbar-gutter: revert !important;
+    }
+}
