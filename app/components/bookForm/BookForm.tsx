@@ -14,7 +14,7 @@ export default function BookForm({ book=null, modalRef=null }) {
         { mode }
         <Formik
             initialValues={{
-                name: book?.id || '',
+                name: book?.name || '',
                 price: book?.price || '',
                 category: book?.category || '',
                 description: book?.description || ''

@@ -6,8 +6,6 @@ import {Action} from 'redux';
 import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 import produce from 'immer'; 
 
-let uid = 2; // unique id for each book
-
 export interface BookSliceState {
   id: number,
   name: string,
@@ -17,8 +15,15 @@ export interface BookSliceState {
 }
 
 const initialState: BookSliceState[] = [
-  {id:1, name:'harry', price:10, category:'fantsy', 'description': 'aaa'}
+  {id:1, name:'harry', price:10, category:'fantsy', 'description': 'aaa'},
+  {id:2, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
+  {id:3, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
+  {id:4, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
+  {id:5, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
+  {id:6, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
 ]
+let uid = initialState.length + 1; // unique id for new book entries
+
 
 // If you are not using async thunks you can use the standalone `createSlice`.
 export const BookStoreSlice = createSlice({

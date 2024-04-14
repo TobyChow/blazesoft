@@ -26,6 +26,10 @@ export const BookStore = () => {
     const modalRef = useRef(null);
     console.log(bookList)
 
+    const { data } = useFetchCountQuery();//todo
+    console.log(data);
+    
+
     function handleAdd() {
         modalRef.current.showModal();
     }
@@ -43,14 +47,6 @@ export const BookStore = () => {
                 onClick={handleAdd}
             >
                 +
-            </button>
-
-            <button
-                className={styles.button}
-                aria-label="Increment value"
-                onClick={() => dispatch(edit({ "id": 1, name: 'ab', price: 10, category: 'f', 'description': 'a' }))}
-            >
-                e
             </button>
         </>
     );

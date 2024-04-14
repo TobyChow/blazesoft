@@ -9,7 +9,9 @@ export default function BookList({ bookList }) {
     return (
         <>
         <BookFormModal selectedBook={selectedBook} ref={modalRef}/>
-        {bookList.map(book => <Book key={book.id} setSelectedBook={setSelectedBook} book={book} modalRef={modalRef}/>)}
+        <div className="flex flex-wrap justify-center">
+            {bookList.map(book => <Book key={book.id} setSelectedBook={setSelectedBook} book={book} modalRef={modalRef}/>)}
+        </div>
         </>
     )
 }

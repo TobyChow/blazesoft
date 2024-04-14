@@ -34,7 +34,7 @@ export const api = createApi({
         fetchCount: builder.query({
             query: () => '',
             transformResponse: () => {
-                return { data: {id:1, name:'harry', category:'fantsy', 'description': 'aaa'} }
+                return { data: {id:1, name:'aharry', category:'fantsy', 'description': 'aaa'} }
             }
         })
     }),
