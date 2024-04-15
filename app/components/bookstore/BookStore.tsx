@@ -30,7 +30,7 @@ export const BookStore = () => {
                 Add Book
             </button>
             <Dialog ref={modalRef}>
-                <BookForm modalRef={modalRef}/>
+                <BookForm key={Math.random()} modalRef={modalRef}/>
             </Dialog>
 
             <BookList bookList={bookList}/>

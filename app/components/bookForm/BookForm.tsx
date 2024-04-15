@@ -26,15 +26,15 @@ export default function BookForm({ book = null, modalRef = null }:Props) {
                     category: book?.category || '',
                     description: book?.description || ''
                 }}
-                validateOnChange={false}
-                validateOnBlur={false}
-                validate={values => { //todo better validations
+                validate={values => {
                     const errors:FormError = {};
                     if (values.name === '') {
                         errors.name = 'Required';
                     }
                     if (values.price === '') {
                         errors.price = 'Required';
+                    } else if (!Number(values.price)) {
+                        errors.price = 'Price must be a number';
                     }
                     if (values.category === '') {
                         errors.category = 'Required';
@@ -60,7 +60,7 @@ export default function BookForm({ book = null, modalRef = null }:Props) {
                         </div>
                         <Field id="name" className="input input-bordered" name="name" placeholder="Enter name" />
                     </label>
-                    <ErrorMessage name="category" component="div" />
+                    <ErrorMessage name="name" className="text-red-900" component="div" />
 
                     <label htmlFor="price" className="form-control w-full">
                         <div className="label">
@@ -68,7 +68,7 @@ export default function BookForm({ book = null, modalRef = null }:Props) {
                         </div>
                         <Field id="price" className="input input-bordered" name="price" placeholder="Enter price" />
                     </label>
-                    <ErrorMessage name="category" component="div" />
+                    <ErrorMessage name="price" className="text-red-900" component="div" />
 
                     <label htmlFor="category" className="form-control w-full">
                         <div className="label">
@@ -76,7 +76,7 @@ export default function BookForm({ book = null, modalRef = null }:Props) {
                         </div>
                         <Field id="category" className="input input-bordered" name="category" placeholder="Enter category" />
                     </label>
-                    <ErrorMessage name="category" component="div" />
+                    <ErrorMessage name="category" className="text-red-900" component="div" />
 
                     <label htmlFor="description" className="form-control w-full">
                         <div className="label">
@@ -84,7 +84,7 @@ export default function BookForm({ book = null, modalRef = null }:Props) {
                         </div>
                         <Field id="description" className="w-full textarea textarea-bordered" name="description" as="textarea" placeholder="Enter description" />
                     </label>
-                    <ErrorMessage name="description" component="div" />
+                    <ErrorMessage name="description" className="text-red-900" component="div" />
 
                     <button type="submit" className="btn mt-2">Submit</button>
                 </Form>
