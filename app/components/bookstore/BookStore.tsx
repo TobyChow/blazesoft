@@ -2,19 +2,17 @@
 
 import { useRef } from "react";
 import { 
-    add,
     selectBookList,
 } from "@/lib/features/bookstore/BookStoreSlice";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { wrapper } from "@/lib/store";
+
 
 import BookList from "../bookList/BookList";
 import Dialog from "../dialog/Dialog";
 import BookForm from "../bookForm/BookForm";
 
 export const BookStore = () => {
-    const dispatch = useAppDispatch();
     const bookList = useAppSelector(selectBookList);
     const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -41,11 +39,3 @@ export const BookStore = () => {
         </div>
     );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-    (store) => async (context) => {
-        return {
-            props: {},
-        };
-    }
-);
