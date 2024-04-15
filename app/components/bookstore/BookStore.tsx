@@ -34,8 +34,6 @@ export const BookStore = () => {
             </Dialog>
 
             <BookList bookList={bookList}/>
-
-            
         </div>
     );
 };
