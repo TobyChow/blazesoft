@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Book from "../book/Book"
-import BookFormModal from "../bookFormModal/BookFormModal";
+import Dialog from "../dialog/Dialog";
 
 import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 import BookForm from "../bookForm/BookForm";
@@ -15,9 +15,9 @@ export default function BookList({ bookList }: Props) {
     
     return (
         <>
-        <BookFormModal ref={modalRef}>
+        <Dialog ref={modalRef}>
             <BookForm key={Math.random()} book={selectedBook} modalRef={modalRef}/>
-        </BookFormModal>
+        </Dialog>
         <div className="flex flex-wrap">
             {bookList.map(book => <Book key={book.id} setSelectedBook={setSelectedBook} book={book} modalRef={modalRef}/>)}
         </div>

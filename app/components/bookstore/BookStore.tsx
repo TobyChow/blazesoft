@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { wrapper } from "@/lib/store";
 
 import BookList from "../bookList/BookList";
-import BookFormModal from "../bookFormModal/BookFormModal";
+import Dialog from "../dialog/Dialog";
 import BookForm from "../bookForm/BookForm";
 
 export const BookStore = () => {
@@ -31,9 +31,9 @@ export const BookStore = () => {
             >
                 Add Book
             </button>
-            <BookFormModal ref={modalRef}>
+            <Dialog ref={modalRef}>
                 <BookForm modalRef={modalRef}/>
-            </BookFormModal>
+            </Dialog>
 
             <BookList bookList={bookList}/>
 
