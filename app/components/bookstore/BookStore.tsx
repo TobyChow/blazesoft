@@ -3,15 +3,16 @@
 import { useRef } from "react";
 
 import {
+    add,
     selectBookList,
 } from "@/lib/features/bookstore/BookStoreSlice";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { wrapper } from "@/lib/store";
 import {
-    useFetchCountQuery,
+    useFetchBookListQuery,
     getRunningQueriesThunk,
-    fetchCount
+    fetchBookList
 } from "@/lib/features/bookstore/bookstoreAPI";
 import BookList from "../bookList/BookList";
 import BookFormModal from "../bookFormModal/BookFormModal";
@@ -23,7 +24,7 @@ export const BookStore = () => {
     const modalRef = useRef<HTMLDialogElement>(null);
     console.log(bookList)
 
-    const { data } = useFetchCountQuery();//todo
+    const { data } = useFetchBookListQuery();//todo
     console.log(data);
     
 
@@ -53,7 +54,7 @@ export const BookStore = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (context) => {
-        store.dispatch(fetchCount.initiate());
+        store.dispatch(add({id:6, name:'aaagame of thrones', price:20, category:'fantsy', 'description': 'aaa'}));
 
         await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
