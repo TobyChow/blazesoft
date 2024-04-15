@@ -29,7 +29,7 @@ export default function Book({ book, setSelectedBook, modalRef }:BookProps) {
 
     return (
         <>
-            <div className="card w-96 bg-base-100 shadow-xl m-2 hover:cursor-pointer" data-id={book.id} onClick={handleClick}>
+            <div className="card card-bordered w-96 bg-base-100 shadow-xl m-2 hover:cursor-pointer" data-id={book.id} onClick={handleClick}>
                 <div className="card-body">
                     <div className="card-header flex items-center">
                         <h2 className="card-title">{book.name}</h2>

@@ -23,7 +23,7 @@ export const BookStore = () => {
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pt-5">
             <button
                 className="btn m-auto"
                 aria-label="Increment value"

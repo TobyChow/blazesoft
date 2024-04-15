@@ -9,7 +9,9 @@ body {
   margin: 0;
   font-family: system-ui, sans-serif;
 }
-
+body {
+    background:#c9c9c9;
+}
 a {
   color: inherit;
   text-decoration: none;

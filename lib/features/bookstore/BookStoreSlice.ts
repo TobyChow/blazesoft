@@ -10,12 +10,10 @@ export interface BookState {
 }
 
 const initialState: BookState[] = [
-  {id:1, name:'harry', price:10, category:'fantsy', 'description': 'aaa'},
-  {id:2, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
-  {id:3, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
-  {id:4, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
-  {id:5, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
-  {id:6, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
+  {id:1, name:'Harry Potter', price:10, category:'Fantasy', 'description': 'Yer a Wizard'},
+  {id:2, name:'Game Of Thrones', price:20, category:'Fantasy', 'description': 'The best four seasons of TV'},
+  {id:3, name:'Dune', price:40, category:'Fantasy', 'description': 'Worms and sand'},
+  {id:4, name:'React For Dummies', price:30, category:'LifeStyle', 'description': 'I need this'},
 ]
 let uid = initialState.length + 1; // unique id for new book entries
 
