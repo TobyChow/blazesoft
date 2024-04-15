@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export interface BookState {
   id: number,
@@ -34,6 +35,13 @@ export const BookStoreSlice = createSlice({
       const matchedIdx = state.findIndex(booklist => booklist.id === action.payload.id);
       if (matchedIdx !== -1) state[matchedIdx] = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+        .addCase(HYDRATE, (state, action) => {
+            state.push(action.payload)
+        })
+
   },
   selectors: {
     selectBookList: (state) => state.booklist,
