@@ -15,11 +15,12 @@ import {
 } from "@/lib/features/bookstore/bookstoreAPI";
 import BookList from "../bookList/BookList";
 import BookFormModal from "../bookFormModal/BookFormModal";
+import BookForm from "../bookForm/BookForm";
 
 export const BookStore = () => {
     const dispatch = useAppDispatch();
     const bookList = useAppSelector(selectBookList);
-    const modalRef = useRef(null);
+    const modalRef = useRef<HTMLDialogElement>(null);
     console.log(bookList)
 
     const { data } = useFetchCountQuery();//todo
@@ -27,7 +28,7 @@ export const BookStore = () => {
     
 
     function handleAdd() {
-        modalRef.current.showModal();
+        modalRef?.current?.showModal();
     }
 
     return (
@@ -39,7 +40,9 @@ export const BookStore = () => {
             >
                 Add Book
             </button>
-            <BookFormModal ref={modalRef}/>
+            <BookFormModal ref={modalRef}>
+                <BookForm modalRef={modalRef}/>
+            </BookFormModal>
 
             <BookList bookList={bookList}/>
 

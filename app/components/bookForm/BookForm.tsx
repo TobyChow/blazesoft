@@ -4,11 +4,21 @@ import {
 } from "@/lib/features/bookstore/BookStoreSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 
-export default function BookForm({ book = null, modalRef = null }) {
+interface Props {
+    book?: BookState | null;
+    modalRef: React.RefObject<HTMLDialogElement> | null;
+}
+
+type FormError = { [K in keyof BookState]?: string }
+
+export default function BookForm({ book = null, modalRef = null }:Props) {
     const dispatch = useAppDispatch();
+    const mode = book ? 'Edit' : 'Add';
     return (
-        <>
+        <>                
+            <h3 className="font-bold text-lg">{mode} Book</h3>
             <Formik
                 initialValues={{
                     name: book?.name || '',
@@ -19,7 +29,7 @@ export default function BookForm({ book = null, modalRef = null }) {
                 validateOnChange={false}
                 validateOnBlur={false}
                 validate={values => { //todo better validations
-                    const errors = {};
+                    const errors:FormError = {};
                     if (values.name === '') {
                         errors.name = 'Required';
                     }
@@ -40,7 +50,7 @@ export default function BookForm({ book = null, modalRef = null }) {
                     } else {
                         dispatch(add(values));
                     }
-                    if (modalRef) modalRef.current.close();
+                    if (modalRef) modalRef?.current?.close();
                 }}
             >{(props) => (
                 <Form>

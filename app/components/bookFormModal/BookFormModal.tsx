@@ -3,22 +3,14 @@ import BookForm from "../bookForm/BookForm";
 import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 
 interface Props {
-    selectedBook?: BookState;
-    setSelectedBook?: React.Dispatch<React.SetStateAction<object>> | null;
+    children: React.ReactNode;
 }
 
-const BookFormModal = forwardRef<HTMLDialogElement, Props>(function BookFormModal({ selectedBook=null, setSelectedBook=null }, ref) {
-    const mode = selectedBook ? 'Edit' : 'Add';
-
-    function handleClose() {
-        if (setSelectedBook) setSelectedBook(null)
-    }
-
+const BookFormModal = forwardRef<HTMLDialogElement, Props>(function BookFormModal({ children }, ref) {
     return (
-        <dialog ref={ref} className="modal" onClose={handleClose}>
+        <dialog ref={ref} className="modal">
             <div className="modal-box">
-                <h3 className="font-bold text-lg">{mode} Book</h3>
-                <BookForm key={Math.random()} book={selectedBook} modalRef={ref}/>
+                {children}
             </div>
             <form method="dialog" className="modal-backdrop">
                 <button>close</button>

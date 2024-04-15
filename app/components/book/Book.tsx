@@ -7,24 +7,24 @@ import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 
 interface BookProps {
     book: BookState;
-    setSelectedBook: React.Dispatch<React.SetStateAction<object>>;
+    setSelectedBook: React.Dispatch<React.SetStateAction<BookState>>;
+    modalRef: React.RefObject<HTMLDialogElement>;
 }
 
 export default function Book({ book, setSelectedBook, modalRef }:BookProps) {
     const dispatch = useAppDispatch();
     const bookList = useAppSelector(selectBookList);
 
-    function handleClick(event) {
-        if (event.target.classList.contains('delete-btn')) {
+    function handleClick(event: React.MouseEvent<HTMLDivElement>) {
+        if ((event.target as Element).classList.contains('delete-btn')) {
             event.stopPropagation();
             return;
         }
-        const selectedBookId = event.currentTarget.dataset.id;
-        const selectedBook = bookList.filter(book => book.id == selectedBookId)[0];
+        const selectedBookId = Number(event.currentTarget.dataset.id);
+        const selectedBook = bookList.filter((book:BookState) => book.id === selectedBookId)[0];
         setSelectedBook(selectedBook);
-        console.log(selectedBook);
 
-        modalRef.current.showModal();
+        modalRef?.current?.showModal();
     }
 
     return (
