@@ -1,7 +1,13 @@
 import { forwardRef } from "react";
 import BookForm from "../bookForm/BookForm";
+import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 
-const BookFormModal = forwardRef(function BookFormModal({ selectedBook, setSelectedBook=null }, ref) {
+interface Props {
+    selectedBook?: BookState;
+    setSelectedBook?: React.Dispatch<React.SetStateAction<object>> | null;
+}
+
+const BookFormModal = forwardRef<HTMLDialogElement, Props>(function BookFormModal({ selectedBook=null, setSelectedBook=null }, ref) {
     const mode = selectedBook ? 'Edit' : 'Add';
 
     function handleClose() {

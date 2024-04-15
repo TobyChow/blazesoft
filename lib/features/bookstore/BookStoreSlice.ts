@@ -1,12 +1,6 @@
-import type { AppThunk } from "@/lib/store";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { fetchCount, getRunningQueriesThunk } from "./bookstoreAPI";
-import {configureStore, createSlice, ThunkAction} from '@reduxjs/toolkit';
-import {Action} from 'redux';
-import {createWrapper, HYDRATE} from 'next-redux-wrapper';
-import produce from 'immer'; 
+import { createSlice } from '@reduxjs/toolkit';
 
-export interface BookSliceState {
+export interface BookState {
   id: number,
   name: string,
   price: number,
@@ -14,7 +8,7 @@ export interface BookSliceState {
   description: string,
 }
 
-const initialState: BookSliceState[] = [
+const initialState: BookState[] = [
   {id:1, name:'harry', price:10, category:'fantsy', 'description': 'aaa'},
   {id:2, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
   {id:3, name:'game of thrones', price:20, category:'fantsy', 'description': 'aaa'},
@@ -25,12 +19,9 @@ const initialState: BookSliceState[] = [
 let uid = initialState.length + 1; // unique id for new book entries
 
 
-// If you are not using async thunks you can use the standalone `createSlice`.
 export const BookStoreSlice = createSlice({
   name: "booklist",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     add(state, action) {
       action.payload.id = uid++;
@@ -49,7 +40,6 @@ export const BookStoreSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function.
 export const { add, remove, edit } = BookStoreSlice.actions;
 
 export const { selectBookList } = BookStoreSlice.selectors;

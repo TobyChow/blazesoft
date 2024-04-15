@@ -3,27 +3,33 @@ import {
     selectBookList
 } from "@/lib/features/bookstore/BookStoreSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
 
-export default function Book({ book, setSelectedBook, modalRef }) {
+interface BookProps {
+    book: BookState;
+    setSelectedBook: React.Dispatch<React.SetStateAction<object>>;
+}
+
+export default function Book({ book, setSelectedBook, modalRef }:BookProps) {
     const dispatch = useAppDispatch();
     const bookList = useAppSelector(selectBookList);
 
     function handleClick(event) {
-        if (event.target.classList.contains('delete-btn')){
+        if (event.target.classList.contains('delete-btn')) {
             event.stopPropagation();
             return;
-        } 
+        }
         const selectedBookId = event.currentTarget.dataset.id;
         const selectedBook = bookList.filter(book => book.id == selectedBookId)[0];
         setSelectedBook(selectedBook);
         console.log(selectedBook);
-        
+
         modalRef.current.showModal();
     }
 
     return (
         <>
-            <div className="card w-96 bg-base-100 shadow-xl m-2 hover:cursor-pointer" data-id={book.id}  onClick={handleClick}>
+            <div className="card w-96 bg-base-100 shadow-xl m-2 hover:cursor-pointer" data-id={book.id} onClick={handleClick}>
                 <div className="card-body">
                     <div className="card-header flex items-center">
                         <h2 className="card-title">{book.name}</h2>
@@ -32,7 +38,7 @@ export default function Book({ book, setSelectedBook, modalRef }) {
                     </div>
                     <p>{book.description}</p>
                     <div className="card-actions justify-end">
-                        <button 
+                        <button
                             className="btn delete-btn"
                             aria-label="delete book"
                             onClick={() => dispatch(remove(book.id))}

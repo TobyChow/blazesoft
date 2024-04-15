@@ -2,8 +2,14 @@ import { useRef, useState } from "react";
 import Book from "../book/Book"
 import BookFormModal from "../bookFormModal/BookFormModal";
 
-export default function BookList({ bookList }) {
-    const [selectedBook, setSelectedBook] = useState(null);
+import { BookState } from "@/lib/features/bookstore/BookStoreSlice";
+
+interface Props {
+    bookList: BookState[];
+}
+
+export default function BookList({ bookList }: Props) {
+    const [selectedBook, setSelectedBook] = useState<BookState | null>(null);
     const modalRef = useRef(null);
     
     return (
